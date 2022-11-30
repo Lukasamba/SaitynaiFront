@@ -1,7 +1,8 @@
 import React from 'react';
+import Routes from './pages/Routes';
 
 const App: React.FC = () => {
-  return <div>start</div>;
+  return <Routes />;
 };
 
 export default App;

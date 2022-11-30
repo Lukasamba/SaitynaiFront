@@ -3,11 +3,15 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { QueryParamProvider } from 'use-query-params';
+import RouteAdapter from './components/RouteAdapter/RouteAdapter';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <QueryParamProvider ReactRouterRoute={RouteAdapter as unknown as React.FunctionComponent}>
+        <App />
+      </QueryParamProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root'),
