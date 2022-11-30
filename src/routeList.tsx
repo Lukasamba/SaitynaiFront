@@ -1,5 +1,5 @@
 import React from 'react';
-import { GenericLayout } from './layouts';
+import { GenericLayout } from './layouts/GenericLayout';
 import { Dashboard } from './pages/common/Dashboard';
 import { NotFound } from './pages/common/NotFound';
 
