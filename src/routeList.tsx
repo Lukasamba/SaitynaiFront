@@ -2,6 +2,8 @@ import React from 'react';
 import { GenericLayout } from './layouts/GenericLayout';
 import { Dashboard } from './pages/common/Dashboard';
 import { NotFound } from './pages/common/NotFound';
+import { AuthLayout } from './layouts/AuthLayout';
+import { Login } from './pages/auth/Login';
 
 export interface SiteRoute {
   readonly path: string;
@@ -27,7 +29,14 @@ const RouteList = createRouteTree({
     layout: GenericLayout,
     component: Dashboard,
   },
-
+  AUTH: {
+    LOGIN: {
+      path: '/login',
+      permissions: [],
+      layout: AuthLayout,
+      component: Login,
+    },
+  },
   ERROR: {
     path: '/error',
     permissions: [],

@@ -19,11 +19,14 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
     "react-scripts": "5.0.1",
+    "react-toastify": "^9.1.1",
     "reactstrap": "^9.1.5",
+    "rxjs": "^7.6.0",
     "styled-components": "^5.3.6",
     "typescript": "^4.9.3",
     "use-query-params": "^1.2.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",

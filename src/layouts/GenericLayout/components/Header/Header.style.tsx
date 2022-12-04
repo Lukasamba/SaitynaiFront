@@ -13,4 +13,6 @@ export const StyledHeader = styled.div`
   width: calc(100% - 2rem);
 `;
 
-export const StyledHeaderButton = styled(Button)``;
+export const StyledHeaderButton = styled(Button)`
+  margin-right: 1rem;
+`;
