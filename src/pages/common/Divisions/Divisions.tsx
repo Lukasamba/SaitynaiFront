@@ -38,7 +38,7 @@ const Divisions: React.FC = () => {
   }, []);
   return (
     <StyledDivisionsPage>
-      {isLoading ? <Spinner /> : <Table names={names} data={data} />}
+      {isLoading ? <Spinner /> : <Table names={names} data={data} type={'division'} />}
     </StyledDivisionsPage>
   );
 };

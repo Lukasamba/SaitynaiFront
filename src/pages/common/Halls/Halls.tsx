@@ -38,7 +38,7 @@ const Halls: React.FC = () => {
   }, []);
   return (
     <StyledHallsPage>
-      {isLoading ? <Spinner /> : <Table names={names} data={data} />}
+      {isLoading ? <Spinner /> : <Table names={names} data={data} type={'hall'} />}
     </StyledHallsPage>
   );
 };
