@@ -8,11 +8,16 @@ export const StyledHeader = styled.div`
   color: white;
   display: flex;
   height: 4rem;
+  justify-content: space-between;
   margin: 1rem;
   padding: 1rem;
   width: calc(100% - 2rem);
 `;
 
+export const StyledHeaderSection = styled.div``;
+
 export const StyledHeaderButton = styled(Button)`
-  margin-right: 1rem;
+  :not(:last-child) {
+    margin-right: 1rem;
+  }
 `;

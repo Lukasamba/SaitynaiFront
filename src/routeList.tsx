@@ -4,6 +4,9 @@ import { Dashboard } from './pages/common/Dashboard';
 import { NotFound } from './pages/common/NotFound';
 import { AuthLayout } from './layouts/AuthLayout';
 import { Login } from './pages/auth/Login';
+import { Movies } from './pages/common/Movies';
+import { Halls } from './pages/common/Halls';
+import { Divisions } from './pages/common/Divisions';
 
 export interface SiteRoute {
   readonly path: string;
@@ -28,6 +31,24 @@ const RouteList = createRouteTree({
     permissions: [],
     layout: GenericLayout,
     component: Dashboard,
+  },
+  MOVIES: {
+    path: '/movies',
+    permissions: [],
+    layout: GenericLayout,
+    component: Movies,
+  },
+  HALLS: {
+    path: '/halls',
+    permissions: [],
+    layout: GenericLayout,
+    component: Halls,
+  },
+  DIVISIONS: {
+    path: '/divisions',
+    permissions: [],
+    layout: GenericLayout,
+    component: Divisions,
   },
   AUTH: {
     LOGIN: {

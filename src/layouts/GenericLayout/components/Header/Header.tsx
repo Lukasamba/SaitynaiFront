@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyledHeader, StyledHeaderButton } from './Header.style';
+import { StyledHeader, StyledHeaderButton, StyledHeaderSection } from './Header.style';
 import { useNavigate } from 'react-router-dom';
 import { RouteList } from '../../../../routeList';
 import { DataStorage } from '../../../../services/dataStorage';
@@ -16,19 +16,26 @@ const Header: React.FC = () => {
     navigate(RouteList.AUTH.LOGIN.path);
   };
 
+  const renderButton = (title: string, path: string) => {
+    return <StyledHeaderButton onClick={() => navigate(path)}>{title}</StyledHeaderButton>;
+  };
+
   return (
     <StyledHeader>
-      <StyledHeaderButton onClick={() => navigate(RouteList.DASHBOARD.path)}>
-        Home
-      </StyledHeaderButton>
+      <StyledHeaderSection>
+        {renderButton('Home', RouteList.DASHBOARD.path)}
+        {renderButton('Movies', RouteList.MOVIES.path)}
+        {renderButton('Halls', RouteList.HALLS.path)}
+        {renderButton('Divisions', RouteList.DIVISIONS.path)}
+      </StyledHeaderSection>
 
-      {isLoggedIn() ? (
-        <StyledHeaderButton onClick={() => logout()}>Logout</StyledHeaderButton>
-      ) : (
-        <StyledHeaderButton onClick={() => navigate(RouteList.AUTH.LOGIN.path)}>
-          Login
-        </StyledHeaderButton>
-      )}
+      <StyledHeaderSection>
+        {isLoggedIn() ? (
+          <StyledHeaderButton onClick={logout}>Logout</StyledHeaderButton>
+        ) : (
+          renderButton('Login', RouteList.AUTH.LOGIN.path)
+        )}
+      </StyledHeaderSection>
     </StyledHeader>
   );
 };
