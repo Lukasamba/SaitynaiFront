@@ -6,7 +6,7 @@ interface Props {
   permissions: Array<string>;
 }
 
-const AuthPage: React.FC<Props> = ({ component: Component, layout: Layout, permissions }) => {
+const AuthPage: React.FC<Props> = ({ component: Component, layout: Layout }) => {
   return (
     <Layout>
       <Component />
