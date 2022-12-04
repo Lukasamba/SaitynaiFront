@@ -10,6 +10,7 @@ const Dashboard: React.FC = () => {
     if (!DataStorage.get('jwt')) {
       navigate(RouteList.AUTH.LOGIN.path);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

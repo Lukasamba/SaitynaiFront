@@ -38,6 +38,7 @@ const Login: React.FC = () => {
         helpers.setErrors(e.response.errors);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 

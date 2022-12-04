@@ -4,6 +4,7 @@ import { Global } from './components/Global';
 import Routes from './pages/Routes';
 import { Theme } from './theme';
 import { AppProvider } from './AppContext';
+import { ToastContainer } from 'react-toastify';
 
 const App: React.FC = () => {
   return (
@@ -11,6 +12,7 @@ const App: React.FC = () => {
       <AppProvider>
         <Global />
         <Routes />
+        <ToastContainer position={'bottom-left'} limit={3} />
       </AppProvider>
     </ThemeProvider>
   );
