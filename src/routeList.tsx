@@ -6,6 +6,7 @@ import { Login } from './pages/auth/Login';
 import { Movies } from './pages/common/Movies';
 import { Halls } from './pages/common/Halls';
 import { Divisions } from './pages/common/Divisions';
+import { Register } from './pages/auth/Register';
 
 export interface SiteRoute {
   readonly path: string;
@@ -49,6 +50,12 @@ const RouteList = createRouteTree({
       permissions: [],
       layout: AuthLayout,
       component: Login,
+    },
+    REGISTER: {
+      path: '/register',
+      permissions: [],
+      layout: AuthLayout,
+      component: Register,
     },
   },
   ERROR: {

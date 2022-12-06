@@ -1,5 +1,14 @@
-import React, { useCallback, useState } from 'react';
-import { StyledInputBlock, StyledLabel, StyledLoginButton, StyledLoginPage } from './Login.style';
+import React, { useState } from 'react';
+import {
+  StyledInputBlock,
+  StyledLabel,
+  StyledLoginBlock,
+  StyledLoginButton,
+  StyledLoginPage,
+  StyledLoginSuggestionBlock,
+  StyledLoginSuggestionButton,
+  StyledLoginSuggestionText,
+} from './Login.style';
 import { Form, Formik, FormikHelpers } from 'formik';
 import * as Yup from 'yup';
 import { LoginRequest } from '../../../api/types/auth';
@@ -7,6 +16,8 @@ import { Input } from 'reactstrap';
 import { Api } from '../../../api';
 import { useAppContext } from '../../../AppContext';
 import { DataStorage } from '../../../services/dataStorage';
+import { NavLink } from 'react-router-dom';
+import { RouteList } from '../../../routeList';
 
 const Login: React.FC = () => {
   const appContext = useAppContext();
@@ -16,58 +27,64 @@ const Login: React.FC = () => {
     password: Yup.string().required(),
   });
 
-  const [loginRequest] = useState({
+  const [loginRequest] = useState<LoginRequest>({
     email: '',
     password: '',
   });
 
-  const onSubmit = useCallback(
-    async (request: LoginRequest, helpers: FormikHelpers<LoginRequest>) => {
-      try {
-        const response = await Api.user.auth.login(request);
+  const onSubmit = async (request: LoginRequest, helpers: FormikHelpers<LoginRequest>) => {
+    try {
+      const response = await Api.user.auth.login(request);
 
-        if (response.access_token) {
-          DataStorage.set('jwt', response.access_token);
-          appContext.setJwt(response.access_token);
-        }
-      } catch (e: any) {
-        helpers.setErrors(e.response.errors);
+      if (response.access_token) {
+        DataStorage.set('jwt', response.access_token);
+        appContext.setJwt(response.access_token);
       }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+    } catch (e: any) {
+      helpers.setErrors(e.response.errors);
+    }
+  };
 
   return (
     <StyledLoginPage>
       <Formik initialValues={loginRequest} validationSchema={LoginSchema} onSubmit={onSubmit}>
         {({ handleSubmit, handleChange, values }) => (
           <Form onSubmit={handleSubmit}>
-            <StyledInputBlock>
-              <StyledLabel>Email</StyledLabel>
-              <Input
-                id={'email'}
-                name={'email'}
-                type={'email'}
-                placeholder={'Please enter your email.'}
-                onChange={handleChange}
-                value={values.email}
-              />
-            </StyledInputBlock>
+            <StyledLoginBlock>
+              <StyledInputBlock>
+                <StyledLabel>Email</StyledLabel>
+                <Input
+                  id={'email'}
+                  name={'email'}
+                  type={'email'}
+                  placeholder={'Please enter your email.'}
+                  onChange={handleChange}
+                  value={values.email}
+                />
+              </StyledInputBlock>
 
-            <StyledInputBlock>
-              <StyledLabel>Password</StyledLabel>
-              <Input
-                id={'password'}
-                name={'password'}
-                type={'password'}
-                placeholder={'Please enter your password.'}
-                onChange={handleChange}
-                value={values.password}
-              />
-            </StyledInputBlock>
+              <StyledInputBlock>
+                <StyledLabel>Password</StyledLabel>
+                <Input
+                  id={'password'}
+                  name={'password'}
+                  type={'password'}
+                  placeholder={'Please enter your password.'}
+                  onChange={handleChange}
+                  value={values.password}
+                />
+              </StyledInputBlock>
 
-            <StyledLoginButton>Login</StyledLoginButton>
+              <StyledLoginButton>Login</StyledLoginButton>
+
+              <StyledLoginSuggestionBlock>
+                <StyledLoginSuggestionText>Want to sign up ? </StyledLoginSuggestionText>
+
+                <StyledLoginSuggestionButton>
+                  <NavLink to={RouteList.AUTH.REGISTER.path}>Sign up</NavLink>
+                </StyledLoginSuggestionButton>
+              </StyledLoginSuggestionBlock>
+            </StyledLoginBlock>
           </Form>
         )}
       </Formik>

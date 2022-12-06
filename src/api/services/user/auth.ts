@@ -1,6 +1,6 @@
 import Client from '../client';
 import Http from '../../http';
-import { LoginRequest, LoginUserResponse } from '../../types/auth';
+import { EmptyResponse, LoginRequest, LoginUserResponse, RegisterRequest } from '../../types/auth';
 
 class Auth extends Client {
   constructor(http: Http) {
@@ -15,6 +15,14 @@ class Auth extends Client {
 
   login = (data: LoginRequest): Promise<LoginUserResponse> => {
     return this.http.post(this.api.LOGIN, data);
+  };
+
+  register = (data: RegisterRequest): Promise<EmptyResponse> => {
+    return this.http.post(this.api.REGISTER, data);
+  };
+
+  logout = (): Promise<EmptyResponse> => {
+    return this.http.post(this.api.LOGOUT);
   };
 }
 

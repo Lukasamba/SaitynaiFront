@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { RouteList } from '../../../../routeList';
 import { DataStorage } from '../../../../services/dataStorage';
 import { useAppContext } from '../../../../AppContext';
+import { Api } from '../../../../api';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -14,10 +15,14 @@ const Header: React.FC = () => {
     return !!DataStorage.get('jwt');
   };
 
-  const logout = () => {
-    DataStorage.remove('jwt');
-    appContext.setJwt(null);
-    navigate(RouteList.AUTH.LOGIN.path);
+  const logout = async () => {
+    try {
+      await Api.user.auth.logout();
+    } finally {
+      DataStorage.remove('jwt');
+      appContext.setJwt(null);
+      navigate(RouteList.AUTH.LOGIN.path);
+    }
   };
 
   const renderButton = (title: string, path: string) => {
