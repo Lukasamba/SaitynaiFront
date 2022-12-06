@@ -4,8 +4,8 @@ import { StyledInputBlock, StyledLabel } from '../../../auth/Login/Login.style';
 import { Input } from 'reactstrap';
 import { Modal } from '../../../../components/Modal';
 import * as Yup from 'yup';
-import { MovieCreateRequest } from '../../../../api/types/movies';
 import { Api } from '../../../../api';
+import { HallCreateRequest } from '../../../../api/types/halls';
 
 interface Props {
   isOpen: boolean;
@@ -14,27 +14,25 @@ interface Props {
   render: () => void;
 }
 
-const MovieCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) => {
-  const MovieSchema = Yup.object().shape({
+const HallCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) => {
+  const HallSchema = Yup.object().shape({
     name: Yup.string().required(),
-    genre: Yup.string().required(),
-    length: Yup.string().required(),
-    image_url: Yup.string().required(),
+    seats_count: Yup.number().required(),
+    division_id: Yup.number().required(),
   });
 
-  const [movieRequest] = useState<MovieCreateRequest>({
+  const [hallRequest] = useState<HallCreateRequest>({
     name: '',
-    genre: '',
-    length: '',
-    image_url: '',
+    seats_count: 0,
+    division_id: 0,
   });
 
   const onSubmit = async (
-    request: MovieCreateRequest,
-    helpers: FormikHelpers<MovieCreateRequest>,
+    request: HallCreateRequest,
+    helpers: FormikHelpers<HallCreateRequest>,
   ) => {
     try {
-      await Api.movies.create(request);
+      await Api.halls.create(request);
     } catch (e: any) {
       helpers.setErrors(e.response.errors);
     } finally {
@@ -42,6 +40,7 @@ const MovieCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) 
       render();
     }
   };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
 
   const formRef = useRef<any>();
 
@@ -52,10 +51,10 @@ const MovieCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) 
   };
 
   return (
-    <Modal title={'Add Movie'} isOpen={isOpen} toggle={toggle} onSubmit={handleSubmit}>
+    <Modal title={'Add Hall'} isOpen={isOpen} toggle={toggle} onSubmit={handleSubmit}>
       <Formik
-        initialValues={movieRequest}
-        validationSchema={MovieSchema}
+        initialValues={hallRequest}
+        validationSchema={HallSchema}
         onSubmit={onSubmit}
         innerRef={formRef}
       >
@@ -67,45 +66,33 @@ const MovieCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) 
                 id={'name'}
                 name={'name'}
                 type={'text'}
-                placeholder={"Please enter movie's name."}
+                placeholder={"Please enter hall's name."}
                 onChange={handleChange}
                 value={values.name}
               />
             </StyledInputBlock>
 
             <StyledInputBlock>
-              <StyledLabel>Genre</StyledLabel>
+              <StyledLabel>Seats count</StyledLabel>
               <Input
-                id={'genre'}
-                name={'genre'}
-                type={'text'}
-                placeholder={"Please enter movie's genre."}
+                id={'seats_count'}
+                name={'seats_count'}
+                type={'number'}
+                placeholder={'Please enter seats count.'}
                 onChange={handleChange}
-                value={values.genre}
+                value={values.seats_count}
               />
             </StyledInputBlock>
 
             <StyledInputBlock>
-              <StyledLabel>Length</StyledLabel>
+              <StyledLabel>Division ID</StyledLabel>
               <Input
-                id={'length'}
-                name={'length'}
-                type={'text'}
-                placeholder={"Please enter movie's length."}
+                id={'division_id'}
+                name={'division_id'}
+                type={'number'}
+                placeholder={"Please enter division's id."}
                 onChange={handleChange}
-                value={values.length}
-              />
-            </StyledInputBlock>
-
-            <StyledInputBlock>
-              <StyledLabel>Image URL</StyledLabel>
-              <Input
-                id={'image_url'}
-                name={'image_url'}
-                type={'text'}
-                placeholder={"Please enter movie's image url."}
-                onChange={handleChange}
-                value={values.image_url}
+                value={values.division_id}
               />
             </StyledInputBlock>
           </Form>
@@ -115,4 +102,4 @@ const MovieCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) 
   );
 };
 
-export default MovieCreateModal;
+export default HallCreateModal;

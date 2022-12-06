@@ -3,12 +3,68 @@ import { StyledDivisionsPage } from './Divisions.style';
 import { Api } from '../../../api';
 import { DivisionsListResponse } from '../../../api/types/divisions';
 import { Spinner } from '../../../components/Spinner';
-import Table from '../../../components/Table/Table';
+import { Button, Table as ReactstrapTable } from 'reactstrap';
+import { ConfirmModal } from '../../../components/Modal/ConfirmModal';
+import { DivisionCreateModal } from './DivisionCreateModal';
+import { DivisionEditModal } from './DivisionEditModal';
 
 const Divisions: React.FC = () => {
-  const names = ['ID', 'Address', 'Halls Count', 'Actions'];
-  const [data, setData] = useState<DivisionsListResponse[]>([]);
+  const [render, setRender] = useState<number>(0);
+  const toggleRender = () => setRender((prevState) => prevState + 1);
+
   const [isLoading, setLoading] = useState<boolean>(false);
+
+  const [data, setData] = useState<DivisionsListResponse>([]);
+  const [currentDivisionId, setCurrentDivisionId] = useState<number>(0);
+
+  const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
+  const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
+  const [isDeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+
+  const toggleCreateModal = () => setCreateModalOpen(!isCreateModalOpen);
+  const toggleEditModal = () => setEditModalOpen(!isEditModalOpen);
+  const toggleDeleteModal = () => setDeleteModalOpen(!isDeleteModalOpen);
+
+  const names = ['ID', 'Address', 'Halls Count', 'Actions'];
+  const renderTableHeader = () => {
+    return names.map((value, index) => <th key={index}>{value}</th>);
+  };
+
+  const renderButtons = (id: number) => {
+    return (
+      <>
+        <Button
+          color={'primary'}
+          onClick={() => {
+            setCurrentDivisionId(id);
+            toggleEditModal();
+          }}
+        >
+          Edit
+        </Button>
+        <Button
+          color={'danger'}
+          onClick={() => {
+            setCurrentDivisionId(id);
+            toggleDeleteModal();
+          }}
+        >
+          Delete
+        </Button>
+      </>
+    );
+  };
+
+  const renderTableContent = () => {
+    return data.map((value, index) => (
+      <tr key={index}>
+        {Object.values(value).map((v, i) => (
+          <td key={i}>{v}</td>
+        ))}
+        <td>{renderButtons(value.id)}</td>
+      </tr>
+    ));
+  };
 
   useEffect(() => {
     setLoading(true);
@@ -22,10 +78,47 @@ const Divisions: React.FC = () => {
       }
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [render]);
   return (
     <StyledDivisionsPage>
-      {isLoading ? <Spinner /> : <Table names={names} data={data} type={'division'} />}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          <Button onClick={toggleCreateModal}>Add</Button>
+
+          <ReactstrapTable hover>
+            <thead>
+              <tr>{renderTableHeader()}</tr>
+            </thead>
+
+            <tbody>{renderTableContent()}</tbody>
+          </ReactstrapTable>
+        </>
+      )}
+
+      <DivisionCreateModal
+        isOpen={isCreateModalOpen}
+        setOpen={setCreateModalOpen}
+        toggle={toggleCreateModal}
+        render={toggleRender}
+      />
+
+      <DivisionEditModal
+        currentItemId={currentDivisionId}
+        isOpen={isEditModalOpen}
+        setOpen={setEditModalOpen}
+        toggle={toggleEditModal}
+        render={toggleRender}
+      />
+
+      <ConfirmModal
+        item={'division'}
+        currentItemId={currentDivisionId}
+        toggle={toggleDeleteModal}
+        isOpen={isDeleteModalOpen}
+        render={toggleRender}
+      />
     </StyledDivisionsPage>
   );
 };

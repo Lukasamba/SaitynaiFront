@@ -8,4 +8,4 @@ export interface LoginUserResponse {
   token_type: string;
 }
 
-export type EmptyResponse = Record<string, never>;
+export type EmptyResponse = [];
