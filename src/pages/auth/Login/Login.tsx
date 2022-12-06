@@ -7,11 +7,8 @@ import { Input } from 'reactstrap';
 import { Api } from '../../../api';
 import { useAppContext } from '../../../AppContext';
 import { DataStorage } from '../../../services/dataStorage';
-import { useNavigate } from 'react-router-dom';
-import { RouteList } from '../../../routeList';
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
   const appContext = useAppContext();
 
   const LoginSchema = Yup.object().shape({
@@ -32,7 +29,6 @@ const Login: React.FC = () => {
         if (response.access_token) {
           DataStorage.set('jwt', response.access_token);
           appContext.setJwt(response.access_token);
-          navigate(RouteList.DASHBOARD.path);
         }
       } catch (e: any) {
         helpers.setErrors(e.response.errors);

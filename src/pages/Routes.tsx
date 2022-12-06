@@ -31,9 +31,9 @@ const AppRoutes: React.FC = () => {
 
   return (
     <Routes>
-      <Route path={'/'} element={<Navigate replace to={'/dashboard'} />} />
+      <Route path={'/'} element={<Navigate replace to={RouteList.MOVIES.path} />} />
       {iterateRoutes(RouteList)}
-      <Route path={'*'} element={<Navigate replace to={'/error'} />} />
+      <Route path={'*'} element={<Navigate replace to={RouteList.ERROR.path} />} />
     </Routes>
   );
 };

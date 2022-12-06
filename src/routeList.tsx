@@ -1,6 +1,5 @@
 import React from 'react';
 import { GenericLayout } from './layouts/GenericLayout';
-import { Dashboard } from './pages/common/Dashboard';
 import { NotFound } from './pages/common/NotFound';
 import { AuthLayout } from './layouts/AuthLayout';
 import { Login } from './pages/auth/Login';
@@ -26,12 +25,6 @@ const createRouteTree = <T extends RouteTree>(item: T): RouteTreeProps<T> => {
 };
 
 const RouteList = createRouteTree({
-  DASHBOARD: {
-    path: '/dashboard',
-    permissions: [],
-    layout: GenericLayout,
-    component: Dashboard,
-  },
   MOVIES: {
     path: '/movies',
     permissions: [],

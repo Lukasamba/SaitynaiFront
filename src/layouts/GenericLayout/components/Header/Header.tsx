@@ -3,9 +3,12 @@ import { StyledHeader, StyledHeaderButton, StyledHeaderSection } from './Header.
 import { useNavigate } from 'react-router-dom';
 import { RouteList } from '../../../../routeList';
 import { DataStorage } from '../../../../services/dataStorage';
+import { useAppContext } from '../../../../AppContext';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+
+  const appContext = useAppContext();
 
   const isLoggedIn = () => {
     return !!DataStorage.get('jwt');
@@ -13,6 +16,7 @@ const Header: React.FC = () => {
 
   const logout = () => {
     DataStorage.remove('jwt');
+    appContext.setJwt(null);
     navigate(RouteList.AUTH.LOGIN.path);
   };
 
@@ -23,7 +27,6 @@ const Header: React.FC = () => {
   return (
     <StyledHeader>
       <StyledHeaderSection>
-        {renderButton('Home', RouteList.DASHBOARD.path)}
         {renderButton('Movies', RouteList.MOVIES.path)}
         {renderButton('Halls', RouteList.HALLS.path)}
         {renderButton('Divisions', RouteList.DIVISIONS.path)}
