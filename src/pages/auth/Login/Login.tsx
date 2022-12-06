@@ -9,7 +9,7 @@ import {
   StyledLoginSuggestionButton,
   StyledLoginSuggestionText,
 } from './Login.style';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { LoginRequest } from '../../../api/types/auth';
 import { Input } from 'reactstrap';
@@ -18,6 +18,7 @@ import { useAppContext } from '../../../AppContext';
 import { DataStorage } from '../../../services/dataStorage';
 import { NavLink } from 'react-router-dom';
 import { RouteList } from '../../../routeList';
+import { toast } from 'react-toastify';
 
 const Login: React.FC = () => {
   const appContext = useAppContext();
@@ -32,7 +33,7 @@ const Login: React.FC = () => {
     password: '',
   });
 
-  const onSubmit = async (request: LoginRequest, helpers: FormikHelpers<LoginRequest>) => {
+  const onSubmit = async (request: LoginRequest) => {
     try {
       const response = await Api.user.auth.login(request);
 
@@ -41,7 +42,9 @@ const Login: React.FC = () => {
         appContext.setJwt(response.access_token);
       }
     } catch (e: any) {
-      helpers.setErrors(e.response.errors);
+      toast.error(e.response.message);
+    } finally {
+      toast.success('Logged in successfully!');
     }
   };
 
