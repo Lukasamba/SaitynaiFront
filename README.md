@@ -1,46 +1,38 @@
-# Getting Started with Create React App
+Kino teatro administravimo sistema
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Išorinės pusės kodo repozitorija.<br>
 
-## Available Scripts
+Projekto tikslas – sukurti kino teatro valdymo sistemą, kuri leistu pridėti naujus kino teatro padalinius, padaliniams pridėti filmams žiūrėti sales ir salėms pridėti žiūrėjimui filmus.<br>
 
-In the project directory, you can run:
+Sistemos pagrindinės funkcijos:
 
-### `npm start`
+Neregistruotas sistemos naudotojas galės:<br>
+1.	Peržiūrėti rodomų filmų sąrašą;<br>
+2.	Užsiregistruoti prie internetinės aplikacijos.<br>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Registruotas sistemos vartotojas galės:<br>
+1.	Prisijungti prie internetinės aplikacijos;<br>
+2.	Atsijungti nuo internetinės aplikacijos;<br>
+3.	Užsiregistruoti peržiūrai į filmą;<br>
+4.	Peržiūrėti sąrašą filmų, į kuriuos yra peržiūrėti užsiregistravęs.<br>
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Administratorius galės:<br>
+1.	Valdyti padalinius:<br>
+      1.1.	Pridėti padalinį;<br>
+      1.2.	Peržiūrėti padalinio informacija;<br>
+      1.3.	Redaguoti padalinį;<br>
+      1.4.	Pašalinti padalinį.<br>
+2.	Valdyti sales:<br>
+      2.1.	Pridėti salę;<br>
+      2.2.	Peržiūrėti salės informacija;<br>
+      2.3.	Redaguoti salę;<br>
+      2.4.	Pašalinti salę.<br>
+3.	Valdyti filmus:<br>
+      3.1.	Pridėti filmą;<br>
+      3.2.	Peržiūrėti filmo informacija;<br>
+      3.3.	Redaguoti filmą;<br>
+      3.4.	Pašalinti filmą.<br>
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+Darbą atliko:<br>
+Lukas Velička IFF-9/3
