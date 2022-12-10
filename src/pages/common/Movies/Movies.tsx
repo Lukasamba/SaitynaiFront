@@ -55,7 +55,9 @@ const Movies: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [render]);
 
-  const names = ['ID', 'Name', 'Genre', 'Length', 'Image URL', 'Actions'];
+  const names = isUser()
+    ? ['ID', 'Name', 'Genre', 'Length', 'Image URL', 'Actions']
+    : ['ID', 'Name', 'Genre', 'Length', 'Image URL'];
   const renderTableHeader = () => {
     return names.map((value, index) => <th key={index}>{value}</th>);
   };

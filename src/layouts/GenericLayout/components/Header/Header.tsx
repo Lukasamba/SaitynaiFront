@@ -51,7 +51,7 @@ const Header: React.FC = () => {
     } finally {
       DataStorage.remove('jwt');
       appContext.setJwt(null);
-      navigate(RouteList.AUTH.LOGIN.path);
+      navigate('/');
     }
   };
 
