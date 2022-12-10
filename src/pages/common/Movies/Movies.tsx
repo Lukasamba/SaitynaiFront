@@ -109,9 +109,17 @@ const Movies: React.FC = () => {
   const renderTableContent = () => {
     return data.map((value, index) => (
       <tr key={index}>
-        {Object.values(value).map((v, i) => (
-          <td key={i}>{v}</td>
-        ))}
+        {Object.values(value).map((v, i) =>
+          i != 4 ? (
+            <td key={i}>{v}</td>
+          ) : (
+            <td key={i}>
+              <a href={v} target={'_blank'} rel="noopener noreferrer">
+                url
+              </a>
+            </td>
+          ),
+        )}
         <td>{renderButtons(value.id)}</td>
       </tr>
     ));
