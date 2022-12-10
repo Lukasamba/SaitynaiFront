@@ -7,10 +7,19 @@ import { Button, Table as ReactstrapTable } from 'reactstrap';
 import { ConfirmModal } from '../../../components/Modal/ConfirmModal';
 import { DivisionCreateModal } from './DivisionCreateModal';
 import { DivisionEditModal } from './DivisionEditModal';
+import useRoles, { Roles } from '../../../helpers/helpers';
 
 const Divisions: React.FC = () => {
   const [render, setRender] = useState<number>(0);
   const toggleRender = () => setRender((prevState) => prevState + 1);
+
+  const remoteRoles = useRoles();
+  const isAdmin = () => {
+    return remoteRoles.hasAny(Roles.Admin);
+  };
+  const isManager = () => {
+    return remoteRoles.hasAny(Roles.Manager);
+  };
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -33,24 +42,31 @@ const Divisions: React.FC = () => {
   const renderButtons = (id: number) => {
     return (
       <>
-        <Button
-          color={'primary'}
-          onClick={() => {
-            setCurrentDivisionId(id);
-            toggleEditModal();
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          color={'danger'}
-          onClick={() => {
-            setCurrentDivisionId(id);
-            toggleDeleteModal();
-          }}
-        >
-          Delete
-        </Button>
+        {isManager() && (
+          <Button
+            color={'primary'}
+            onClick={() => {
+              setCurrentDivisionId(id);
+              toggleEditModal();
+            }}
+            disabled={!isManager()}
+          >
+            Edit
+          </Button>
+        )}
+
+        {isAdmin() && (
+          <Button
+            color={'danger'}
+            onClick={() => {
+              setCurrentDivisionId(id);
+              toggleDeleteModal();
+            }}
+            disabled={!isAdmin()}
+          >
+            Delete
+          </Button>
+        )}
       </>
     );
   };
@@ -85,7 +101,11 @@ const Divisions: React.FC = () => {
         <Spinner />
       ) : (
         <>
-          <Button onClick={toggleCreateModal}>Add</Button>
+          {isManager() && (
+            <Button onClick={toggleCreateModal} disabled={!isManager()}>
+              Add
+            </Button>
+          )}
 
           <ReactstrapTable hover>
             <thead>

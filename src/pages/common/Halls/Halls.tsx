@@ -7,10 +7,19 @@ import { Button, Table as ReactstrapTable } from 'reactstrap';
 import { HallCreateModal } from './HallCreateModal';
 import { ConfirmModal } from '../../../components/Modal/ConfirmModal';
 import { HallEditModal } from './HallEditModal';
+import useRoles, { Roles } from '../../../helpers/helpers';
 
 const Halls: React.FC = () => {
   const [render, setRender] = useState<number>(0);
   const toggleRender = () => setRender((prevState) => prevState + 1);
+
+  const remoteRoles = useRoles();
+  const isAdmin = () => {
+    return remoteRoles.hasAny(Roles.Admin);
+  };
+  const isManager = () => {
+    return remoteRoles.hasAny(Roles.Manager);
+  };
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -25,7 +34,7 @@ const Halls: React.FC = () => {
   const toggleEditModal = () => setEditModalOpen(!isEditModalOpen);
   const toggleDeleteModal = () => setDeleteModalOpen(!isDeleteModalOpen);
 
-  const names = ['ID', 'Division ID', 'Name', 'Seats Count', 'Actions'];
+  const names = ['ID', 'Division Address', 'Name', 'Seats Count', 'Actions'];
   const renderTableHeader = () => {
     return names.map((value, index) => <th key={index}>{value}</th>);
   };
@@ -33,24 +42,31 @@ const Halls: React.FC = () => {
   const renderButtons = (id: number) => {
     return (
       <>
-        <Button
-          color={'primary'}
-          onClick={() => {
-            setCurrentHallId(id);
-            toggleEditModal();
-          }}
-        >
-          Edit
-        </Button>
-        <Button
-          color={'danger'}
-          onClick={() => {
-            setCurrentHallId(id);
-            toggleDeleteModal();
-          }}
-        >
-          Delete
-        </Button>
+        {isManager() && (
+          <Button
+            color={'primary'}
+            onClick={() => {
+              setCurrentHallId(id);
+              toggleEditModal();
+            }}
+            disabled={!isManager()}
+          >
+            Edit
+          </Button>
+        )}
+
+        {isAdmin() && (
+          <Button
+            color={'danger'}
+            onClick={() => {
+              setCurrentHallId(id);
+              toggleDeleteModal();
+            }}
+            disabled={!isAdmin()}
+          >
+            Delete
+          </Button>
+        )}
       </>
     );
   };
@@ -58,9 +74,7 @@ const Halls: React.FC = () => {
   const renderTableContent = () => {
     return data.map((value, index) => (
       <tr key={index}>
-        {Object.values(value).map((v, i) => (
-          <td key={i}>{v}</td>
-        ))}
+        {Object.values(value).map((v, i) => i != 0 && <td key={i}>{v}</td>)}
         <td>{renderButtons(value.id)}</td>
       </tr>
     ));
@@ -80,13 +94,18 @@ const Halls: React.FC = () => {
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [render]);
+
   return (
     <StyledHallsPage>
       {isLoading ? (
         <Spinner />
       ) : (
         <>
-          <Button onClick={toggleCreateModal}>Add</Button>
+          {isManager() && (
+            <Button onClick={toggleCreateModal} disabled={!isManager()}>
+              Add
+            </Button>
+          )}
 
           <ReactstrapTable hover>
             <thead>

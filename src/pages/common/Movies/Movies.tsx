@@ -8,6 +8,7 @@ import { MovieCreateModal } from './MovieCreateModal';
 import { ConfirmModal } from '../../../components/Modal/ConfirmModal';
 import { MovieEditModal } from './MovieEditModal';
 import useRoles, { Roles } from '../../../helpers/helpers';
+import { MovieReserveModal } from './MovieReserveModal';
 
 const Movies: React.FC = () => {
   const [render, setRender] = useState<number>(0);
@@ -20,6 +21,9 @@ const Movies: React.FC = () => {
   const isManager = () => {
     return remoteRoles.hasAny(Roles.Manager);
   };
+  const isUser = () => {
+    return remoteRoles.hasAny(Roles.User);
+  };
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -29,10 +33,12 @@ const Movies: React.FC = () => {
   const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
   const [isDeleteModalOpen, setDeleteModalOpen] = useState<boolean>(false);
+  const [isReserveModalOpen, setReserveModalOpen] = useState<boolean>(false);
 
   const toggleCreateModal = () => setCreateModalOpen(!isCreateModalOpen);
   const toggleEditModal = () => setEditModalOpen(!isEditModalOpen);
   const toggleDeleteModal = () => setDeleteModalOpen(!isDeleteModalOpen);
+  const toggleReserveModal = () => setReserveModalOpen(!isReserveModalOpen);
 
   useEffect(() => {
     setLoading(true);
@@ -57,27 +63,43 @@ const Movies: React.FC = () => {
   const renderButtons = (id: number) => {
     return (
       <>
-        <Button
-          color={'primary'}
-          onClick={() => {
-            setCurrentMovieId(id);
-            toggleEditModal();
-          }}
-          disabled={!isManager()}
-        >
-          Edit
-        </Button>
+        {isUser() && (
+          <Button
+            onClick={() => {
+              setCurrentMovieId(id);
+              toggleReserveModal();
+            }}
+            disabled={!isUser()}
+          >
+            Reserve
+          </Button>
+        )}
 
-        <Button
-          color={'danger'}
-          onClick={() => {
-            setCurrentMovieId(id);
-            toggleDeleteModal();
-          }}
-          disabled={!isAdmin()}
-        >
-          Delete
-        </Button>
+        {isManager() && (
+          <Button
+            color={'primary'}
+            onClick={() => {
+              setCurrentMovieId(id);
+              toggleEditModal();
+            }}
+            disabled={!isManager()}
+          >
+            Edit
+          </Button>
+        )}
+
+        {isAdmin() && (
+          <Button
+            color={'danger'}
+            onClick={() => {
+              setCurrentMovieId(id);
+              toggleDeleteModal();
+            }}
+            disabled={!isAdmin()}
+          >
+            Delete
+          </Button>
+        )}
       </>
     );
   };
@@ -99,9 +121,11 @@ const Movies: React.FC = () => {
         <Spinner />
       ) : (
         <>
-          <Button onClick={toggleCreateModal} disabled={!isManager()}>
-            Add
-          </Button>
+          {isManager() && (
+            <Button onClick={toggleCreateModal} disabled={!isManager()}>
+              Add
+            </Button>
+          )}
 
           <ReactstrapTable hover>
             <thead>
@@ -137,6 +161,15 @@ const Movies: React.FC = () => {
           toggle={toggleDeleteModal}
           isOpen={isDeleteModalOpen}
           render={toggleRender}
+        />
+      )}
+
+      {currentMovieId && (
+        <MovieReserveModal
+          currentMovieId={currentMovieId}
+          isOpen={isReserveModalOpen}
+          setOpen={setReserveModalOpen}
+          toggle={toggleReserveModal}
         />
       )}
     </StyledMoviesPage>

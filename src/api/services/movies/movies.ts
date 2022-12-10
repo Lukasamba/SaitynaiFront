@@ -5,6 +5,7 @@ import {
   MovieResponse,
   MoviesListResponse,
   MovieUpdateRequest,
+  ReservationsListResponse,
 } from '../../types/movies';
 import { EmptyResponse } from '../../types/auth';
 
@@ -13,9 +14,11 @@ class Movies extends Client {
     super(http);
 
     this.api = {
-      MOVIES_LIST: `${this.http.baseUrl}/movies`,
+      MOVIES_LIST: `${this.http.baseUrl}/auth/movies`,
       MOVIE_CREATE: `${this.http.baseUrl}/movies`,
       MOVIE: `${this.http.baseUrl}/movies/{movieId}`,
+      RESERVATION_LIST: `${this.http.baseUrl}/movies/reserve/list`,
+      RESERVE: `${this.http.baseUrl}/movies/reserve/{movieId}`,
     };
   }
 
@@ -37,6 +40,14 @@ class Movies extends Client {
 
   delete = (movieId: number): Promise<EmptyResponse> => {
     return this.http.delete(this.buildUrl(this.api.MOVIE, { movieId }));
+  };
+
+  getReservationsList = (): Promise<ReservationsListResponse> => {
+    return this.http.get(this.api.RESERVATION_LIST);
+  };
+
+  reserve = (movieId: number): Promise<EmptyResponse> => {
+    return this.http.post(this.buildUrl(this.api.RESERVE, { movieId }));
   };
 }
 

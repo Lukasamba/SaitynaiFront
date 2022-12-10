@@ -15,6 +15,7 @@ import useWindowsSize, { BOOTSTRAP_MD_CONTAINER_WIDTH } from '../../../../helper
 import Dropdown from '../../../../components/Dropdown/Dropdown';
 import { DropdownItem, DropdownToggle } from 'reactstrap';
 import iconBurger from '../../../../assets/icons/list.svg';
+import useRoles, { Roles } from '../../../../helpers/helpers';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -22,6 +23,17 @@ const Header: React.FC = () => {
   const windowsSize = useWindowsSize();
   const isTablet = () => {
     return windowsSize.width && windowsSize.width < BOOTSTRAP_MD_CONTAINER_WIDTH;
+  };
+
+  const remoteRoles = useRoles();
+  const isAdmin = () => {
+    return remoteRoles.hasAny(Roles.Admin);
+  };
+  const isManager = () => {
+    return remoteRoles.hasAny(Roles.Manager);
+  };
+  const isUser = () => {
+    return remoteRoles.hasAny(Roles.User);
   };
 
   const [isDropdownOpen, setDropdownOpen] = useState<boolean>(false);
@@ -52,13 +64,14 @@ const Header: React.FC = () => {
       <StyledHeaderSection>
         {!isTablet() ? (
           <>
-            <StyledLogoButton>
+            <StyledLogoButton onClick={() => navigate('/')}>
               <img src={iconLogo} width={24} alt={''} />
             </StyledLogoButton>
 
             {renderButton('Movies', RouteList.MOVIES.path)}
-            {renderButton('Halls', RouteList.HALLS.path)}
-            {renderButton('Divisions', RouteList.DIVISIONS.path)}
+            {isUser() && renderButton('Reservations', RouteList.RESERVATION.path)}
+            {isManager() && renderButton('Halls', RouteList.HALLS.path)}
+            {isAdmin() && renderButton('Divisions', RouteList.DIVISIONS.path)}
           </>
         ) : (
           <Dropdown
@@ -80,7 +93,7 @@ const Header: React.FC = () => {
       </StyledHeaderSection>
 
       {isTablet() && (
-        <StyledLogoButton>
+        <StyledLogoButton onClick={() => navigate('/')}>
           <img src={iconLogo} width={24} alt={''} />
         </StyledLogoButton>
       )}

@@ -7,6 +7,7 @@ import * as Yup from 'yup';
 import { Api } from '../../../../api';
 import { Spinner } from '../../../../components/Spinner';
 import { HallUpdateRequest } from '../../../../api/types/halls';
+import { DivisionsListResponse } from '../../../../api/types/divisions';
 
 interface Props {
   currentItemId: number;
@@ -30,6 +31,20 @@ const HallEditModal: React.FC<Props> = ({ currentItemId, isOpen, setOpen, toggle
     seats_count: 0,
     division_id: 0,
   });
+
+  const [data, setData] = useState<DivisionsListResponse>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await Api.divisions.getList();
+        setData(response);
+      } catch (e: any) {
+        console.error('error halls list');
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [render]);
 
   useEffect(() => {
     setLoading(true);
@@ -103,15 +118,20 @@ const HallEditModal: React.FC<Props> = ({ currentItemId, isOpen, setOpen, toggle
               </StyledInputBlock>
 
               <StyledInputBlock>
-                <StyledLabel>Division ID</StyledLabel>
+                <StyledLabel>Division Address</StyledLabel>
                 <Input
                   id={'division_id'}
                   name={'division_id'}
-                  type={'number'}
-                  placeholder={"Please enter division's id."}
+                  type={'select'}
                   onChange={handleChange}
                   value={values.division_id}
-                />
+                >
+                  {data.map((value, index) => (
+                    <option key={index} value={value.id}>
+                      {value.address}
+                    </option>
+                  ))}
+                </Input>
               </StyledInputBlock>
             </Form>
           )}

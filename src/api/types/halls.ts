@@ -13,6 +13,7 @@ export interface HallUpdateRequest {
 export interface HallResponse {
   id: number;
   division_id: number;
+  division_address: string;
   name: string;
   seats_count: number;
 }

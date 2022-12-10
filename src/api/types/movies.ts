@@ -21,3 +21,11 @@ export interface MovieResponse {
 }
 
 export type MoviesListResponse = MovieResponse[];
+
+export interface ReservationResponse {
+  user_id: number;
+  name: string;
+  reservation_date: string;
+}
+
+export type ReservationsListResponse = ReservationResponse[];
