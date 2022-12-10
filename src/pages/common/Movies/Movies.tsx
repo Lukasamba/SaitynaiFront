@@ -33,6 +33,7 @@ const Movies: React.FC = () => {
         setData(response);
         setLoading(false);
       } catch (e: any) {
+        toggleRender();
         console.error('movies fetch failed');
       }
     })();

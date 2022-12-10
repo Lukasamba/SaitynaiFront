@@ -15,7 +15,7 @@ const Halls: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const [data, setData] = useState<HallsListResponse>([]);
-  const [currentHallId, setCurrentHallId] = useState<number>(0);
+  const [currentHallId, setCurrentHallId] = useState<number>();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
@@ -74,6 +74,7 @@ const Halls: React.FC = () => {
         setData(response);
         setLoading(false);
       } catch (e: any) {
+        toggleRender();
         console.error('error halls list');
       }
     })();
@@ -104,21 +105,25 @@ const Halls: React.FC = () => {
         render={toggleRender}
       />
 
-      <HallEditModal
-        currentItemId={currentHallId}
-        isOpen={isEditModalOpen}
-        setOpen={setEditModalOpen}
-        toggle={toggleEditModal}
-        render={toggleRender}
-      />
+      {currentHallId && (
+        <HallEditModal
+          currentItemId={currentHallId}
+          isOpen={isEditModalOpen}
+          setOpen={setEditModalOpen}
+          toggle={toggleEditModal}
+          render={toggleRender}
+        />
+      )}
 
-      <ConfirmModal
-        item={'hall'}
-        currentItemId={currentHallId}
-        toggle={toggleDeleteModal}
-        isOpen={isDeleteModalOpen}
-        render={toggleRender}
-      />
+      {currentHallId && (
+        <ConfirmModal
+          item={'hall'}
+          currentItemId={currentHallId}
+          toggle={toggleDeleteModal}
+          isOpen={isDeleteModalOpen}
+          render={toggleRender}
+        />
+      )}
     </StyledHallsPage>
   );
 };

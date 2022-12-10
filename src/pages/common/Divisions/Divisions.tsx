@@ -15,7 +15,7 @@ const Divisions: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const [data, setData] = useState<DivisionsListResponse>([]);
-  const [currentDivisionId, setCurrentDivisionId] = useState<number>(0);
+  const [currentDivisionId, setCurrentDivisionId] = useState<number>();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
@@ -104,21 +104,25 @@ const Divisions: React.FC = () => {
         render={toggleRender}
       />
 
-      <DivisionEditModal
-        currentItemId={currentDivisionId}
-        isOpen={isEditModalOpen}
-        setOpen={setEditModalOpen}
-        toggle={toggleEditModal}
-        render={toggleRender}
-      />
+      {currentDivisionId && (
+        <DivisionEditModal
+          currentItemId={currentDivisionId}
+          isOpen={isEditModalOpen}
+          setOpen={setEditModalOpen}
+          toggle={toggleEditModal}
+          render={toggleRender}
+        />
+      )}
 
-      <ConfirmModal
-        item={'division'}
-        currentItemId={currentDivisionId}
-        toggle={toggleDeleteModal}
-        isOpen={isDeleteModalOpen}
-        render={toggleRender}
-      />
+      {currentDivisionId && (
+        <ConfirmModal
+          item={'division'}
+          currentItemId={currentDivisionId}
+          toggle={toggleDeleteModal}
+          isOpen={isDeleteModalOpen}
+          render={toggleRender}
+        />
+      )}
     </StyledDivisionsPage>
   );
 };
