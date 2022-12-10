@@ -15,7 +15,7 @@ const Movies: React.FC = () => {
   const [isLoading, setLoading] = useState<boolean>(false);
 
   const [data, setData] = useState<MoviesListResponse>([]);
-  const [currentMovieId, setCurrentMovieId] = useState<number>(0);
+  const [currentMovieId, setCurrentMovieId] = useState<number>();
 
   const [isCreateModalOpen, setCreateModalOpen] = useState<boolean>(false);
   const [isEditModalOpen, setEditModalOpen] = useState<boolean>(false);
@@ -105,21 +105,25 @@ const Movies: React.FC = () => {
         render={toggleRender}
       />
 
-      <MovieEditModal
-        currentItemId={currentMovieId}
-        isOpen={isEditModalOpen}
-        setOpen={setEditModalOpen}
-        toggle={toggleEditModal}
-        render={toggleRender}
-      />
+      {currentMovieId && (
+        <MovieEditModal
+          currentItemId={currentMovieId}
+          isOpen={isEditModalOpen}
+          setOpen={setEditModalOpen}
+          toggle={toggleEditModal}
+          render={toggleRender}
+        />
+      )}
 
-      <ConfirmModal
-        item={'movie'}
-        currentItemId={currentMovieId}
-        toggle={toggleDeleteModal}
-        isOpen={isDeleteModalOpen}
-        render={toggleRender}
-      />
+      {currentMovieId && (
+        <ConfirmModal
+          item={'movie'}
+          currentItemId={currentMovieId}
+          toggle={toggleDeleteModal}
+          isOpen={isDeleteModalOpen}
+          render={toggleRender}
+        />
+      )}
     </StyledMoviesPage>
   );
 };

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { matchPath, useLocation, useNavigate } from 'react-router-dom';
 import { RouteList } from '../../routeList';
 import { useAppContext } from '../../AppContext';
@@ -19,13 +19,16 @@ const AuthPage: React.FC<Props> = ({ component: Component, layout: Layout }) => 
     return Object.values(RouteList.AUTH).find((value) => matchPath(value.path, pathname));
   };
 
-  if (!appContext.jwt && !isInAnyAuthPage()) {
-    navigate(RouteList.AUTH.LOGIN.path);
-  }
+  useEffect(() => {
+    if (!appContext.jwt && !isInAnyAuthPage()) {
+      navigate(RouteList.AUTH.LOGIN.path);
+    }
 
-  if (appContext.jwt && isInAnyAuthPage()) {
-    navigate(RouteList.MOVIES.path);
-  }
+    if (appContext.jwt && isInAnyAuthPage()) {
+      navigate(RouteList.MOVIES.path);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [appContext]);
 
   return (
     <Layout>
