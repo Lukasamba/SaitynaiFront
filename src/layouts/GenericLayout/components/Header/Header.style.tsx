@@ -16,6 +16,12 @@ export const StyledHeader = styled.div`
 
 export const StyledHeaderSection = styled.div``;
 
+export const StyledLogoButton = styled.button`
+  background-color: transparent;
+  border: none;
+  margin-right: 1rem;
+`;
+
 export const StyledHeaderButton = styled(Button)`
   :not(:last-child) {
     margin-right: 1rem;

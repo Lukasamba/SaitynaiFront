@@ -7,10 +7,19 @@ import { Button, Table as ReactstrapTable } from 'reactstrap';
 import { MovieCreateModal } from './MovieCreateModal';
 import { ConfirmModal } from '../../../components/Modal/ConfirmModal';
 import { MovieEditModal } from './MovieEditModal';
+import useRoles, { Roles } from '../../../helpers/helpers';
 
 const Movies: React.FC = () => {
   const [render, setRender] = useState<number>(0);
   const toggleRender = () => setRender((prevState) => prevState + 1);
+
+  const remoteRoles = useRoles();
+  const isAdmin = () => {
+    return remoteRoles.hasAny(Roles.Admin);
+  };
+  const isManager = () => {
+    return remoteRoles.hasAny(Roles.Manager);
+  };
 
   const [isLoading, setLoading] = useState<boolean>(false);
 
@@ -54,15 +63,18 @@ const Movies: React.FC = () => {
             setCurrentMovieId(id);
             toggleEditModal();
           }}
+          disabled={!isManager()}
         >
           Edit
         </Button>
+
         <Button
           color={'danger'}
           onClick={() => {
             setCurrentMovieId(id);
             toggleDeleteModal();
           }}
+          disabled={!isAdmin()}
         >
           Delete
         </Button>
@@ -87,7 +99,9 @@ const Movies: React.FC = () => {
         <Spinner />
       ) : (
         <>
-          <Button onClick={toggleCreateModal}>Add</Button>
+          <Button onClick={toggleCreateModal} disabled={!isManager()}>
+            Add
+          </Button>
 
           <ReactstrapTable hover>
             <thead>
