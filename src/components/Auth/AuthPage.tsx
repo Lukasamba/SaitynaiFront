@@ -25,7 +25,7 @@ const AuthPage: React.FC<Props> = ({ component: Component, layout: Layout }) => 
     }
 
     if (appContext.jwt && isInAnyAuthPage()) {
-      navigate(RouteList.MOVIES.path);
+      navigate(RouteList.ERROR.path);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [appContext]);
