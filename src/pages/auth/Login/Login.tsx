@@ -13,7 +13,7 @@ import { Form, Formik } from 'formik';
 import * as Yup from 'yup';
 import { LoginRequest } from '../../../api/types/auth';
 import { Input } from 'reactstrap';
-import { Api } from '../../../api';
+import { Api, http } from '../../../api';
 import { useAppContext } from '../../../AppContext';
 import { DataStorage } from '../../../services/dataStorage';
 import { NavLink } from 'react-router-dom';
@@ -34,17 +34,20 @@ const Login: React.FC = () => {
   });
 
   const onSubmit = async (request: LoginRequest) => {
+    let didCatchError = false;
     try {
       const response = await Api.user.auth.login(request);
 
       if (response.access_token) {
+        http.setBearer(response.access_token);
         DataStorage.set('jwt', response.access_token);
         appContext.setJwt(response.access_token);
       }
     } catch (e: any) {
-      toast.error(e.response.message);
+      didCatchError = true;
+      toast.error('Invalid credentials.');
     } finally {
-      toast.success('Logged in successfully!');
+      !didCatchError && toast.success('Logged in successfully!');
     }
   };
 

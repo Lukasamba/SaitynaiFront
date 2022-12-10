@@ -10,6 +10,7 @@ class Auth extends Client {
       LOGIN: `${this.http.baseUrl}/auth/login`,
       REGISTER: `${this.http.baseUrl}/auth/register`,
       LOGOUT: `${this.http.baseUrl}/auth/logout`,
+      REFRESH: `${this.http.baseUrl}/auth/refresh`,
     };
   }
 
@@ -23,6 +24,10 @@ class Auth extends Client {
 
   logout = (): Promise<EmptyResponse> => {
     return this.http.post(this.api.LOGOUT);
+  };
+
+  refresh = (): Promise<LoginUserResponse> => {
+    return this.http.put(this.api.REFRESH);
   };
 }
 
