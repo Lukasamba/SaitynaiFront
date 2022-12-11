@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Form, Formik, FormikHelpers } from 'formik';
 import { StyledInputBlock, StyledLabel } from '../../../auth/Login/Login.style';
 import { Input } from 'reactstrap';
@@ -6,6 +6,7 @@ import { Modal } from '../../../../components/Modal';
 import * as Yup from 'yup';
 import { Api } from '../../../../api';
 import { HallCreateRequest } from '../../../../api/types/halls';
+import { DivisionsListResponse } from '../../../../api/types/divisions';
 
 interface Props {
   isOpen: boolean;
@@ -26,6 +27,20 @@ const HallCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) =
     seats_count: 0,
     division_id: 0,
   });
+
+  const [data, setData] = useState<DivisionsListResponse>([]);
+
+  useEffect(() => {
+    (async () => {
+      try {
+        const response = await Api.divisions.getList();
+        setData(response);
+      } catch (e: any) {
+        console.error('error halls list');
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [render]);
 
   const onSubmit = async (
     request: HallCreateRequest,
@@ -85,15 +100,20 @@ const HallCreateModal: React.FC<Props> = ({ isOpen, setOpen, toggle, render }) =
             </StyledInputBlock>
 
             <StyledInputBlock>
-              <StyledLabel>Division ID</StyledLabel>
+              <StyledLabel>Division Address</StyledLabel>
               <Input
                 id={'division_id'}
                 name={'division_id'}
-                type={'number'}
-                placeholder={"Please enter division's id."}
+                type={'select'}
                 onChange={handleChange}
                 value={values.division_id}
-              />
+              >
+                {data.map((value, index) => (
+                  <option key={index} value={value.id}>
+                    {value.address}
+                  </option>
+                ))}
+              </Input>
             </StyledInputBlock>
           </Form>
         )}
