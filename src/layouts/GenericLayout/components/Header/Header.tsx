@@ -84,10 +84,19 @@ const Header: React.FC = () => {
             }
           >
             <DropdownItem onClick={() => navigate(RouteList.MOVIES.path)}>Movies</DropdownItem>
-            <DropdownItem onClick={() => navigate(RouteList.HALLS.path)}>Halls</DropdownItem>
-            <DropdownItem onClick={() => navigate(RouteList.DIVISIONS.path)}>
-              Divisions
-            </DropdownItem>
+            {isUser() && (
+              <DropdownItem onClick={() => navigate(RouteList.RESERVATION.path)}>
+                Reservations
+              </DropdownItem>
+            )}
+            {isManager() && (
+              <DropdownItem onClick={() => navigate(RouteList.HALLS.path)}>Halls</DropdownItem>
+            )}
+            {isAdmin() && (
+              <DropdownItem onClick={() => navigate(RouteList.DIVISIONS.path)}>
+                Divisions
+              </DropdownItem>
+            )}
           </Dropdown>
         )}
       </StyledHeaderSection>
