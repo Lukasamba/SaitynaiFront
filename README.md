@@ -67,8 +67,5 @@ Padalinių sąrašo puslapis:<br>
 Padalinių modalo pavyzdys:<br>
 ![](/wireframes/divisions_modal_example.png)
 
-Puslapis atidarytas telefonu pavyzdys:<br>
-![](/wireframes/mobile_example.png)
-
 Darbą atliko:<br>
 Lukas Velička IFF-9/3
