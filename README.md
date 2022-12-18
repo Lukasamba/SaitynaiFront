@@ -4,7 +4,7 @@ Išorinės pusės kodo repozitorija.<br>
 
 Projekto tikslas – sukurti kino teatro valdymo sistemą, kuri leistu pridėti naujus kino teatro padalinius, padaliniams pridėti filmams žiūrėti sales ir salėms pridėti žiūrėjimui filmus.<br>
 
-Svetainės adresas: https://neon-horse-61e298.netlify.app.<br>
+Svetainės adresas: https://neon-horse-61e298.netlify.app<br>
 
 Sistemos pagrindinės funkcijos:
 
