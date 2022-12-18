@@ -37,8 +37,38 @@ Administratorius galės:<br>
 
 Naudotojo sąsaja:<br>
 
+Pagrindinis puslapis:<br>
+![](/wireframes/main_page.png)
+
 Prisijungimo puslapis:<br>
 ![](/wireframes/login.png)
+
+Registracijos puslapis:<br>
+![](/wireframes/register.png)
+
+Filmų sąrašo puslapis:<br>
+![](/wireframes/movies_page.png)
+
+Filmų modalo pavyzdys:<br>
+![](/wireframes/movies_modal_example.png)
+
+Rezervacijų sąrašo puslapis:<br>
+![](/wireframes/reservations_page.png)
+
+Salių sąrašo puslapis:<br>
+![](/wireframes/halls_page.png)
+
+Salių modalo pavyzdys:<br>
+![](/wireframes/halls_modal_example.png)
+
+Padalinių sąrašo puslapis:<br>
+![](/wireframes/divisions_page.png)
+
+Padalinių modalo pavyzdys:<br>
+![](/wireframes/divisions_modal_example.png)
+
+Puslapis atidarytas telefonu pavyzdys:<br>
+![](/wireframes/mobile_example.png)
 
 Darbą atliko:<br>
 Lukas Velička IFF-9/3
