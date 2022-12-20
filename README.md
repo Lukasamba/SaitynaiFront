@@ -175,5 +175,5 @@ Pavyko realizuoti išorinėje pusėje visas serverio užklausas.<br>
 Sistema buvo ištestuota, suprogramuoti 42 testai aprėpiantys visas serverio užklausas.<br>
 Taip pat kuriant projektą, buvo naudojama statinė kodo analizė PHPStan, dėl ko buvo stengiamasi išlaikyti švarų, kuo lengviau suprantantį kodą.<br>
 
-Darbą atliko:<br>
-Lukas Velička IFF-9/3
+# Darbą atliko:<br>
+## Lukas Velička IFF-9/3
