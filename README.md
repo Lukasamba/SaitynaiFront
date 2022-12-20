@@ -1,12 +1,12 @@
-Kino teatro administravimo sistema
+# Kino teatro administravimo sistema
 
-Išorinės pusės kodo repozitorija.<br>
+## Išorinės pusės kodo repozitorija.<br>
 
 Projekto tikslas – sukurti kino teatro valdymo sistemą, kuri leistu pridėti naujus kino teatro padalinius, padaliniams pridėti filmams žiūrėti sales ir salėms pridėti žiūrėjimui filmus.<br>
 
 Svetainės adresas: https://neon-horse-61e298.netlify.app<br>
 
-Sistemos pagrindinės funkcijos:
+## Sistemos pagrindinės funkcijos:
 
 Neregistruotas sistemos naudotojas galės:<br>
 1.	Peržiūrėti rodomų filmų sąrašą;<br>
@@ -35,37 +35,145 @@ Administratorius galės:<br>
       3.3.	Redaguoti filmą;<br>
       3.4.	Pašalinti filmą.<br>
 
-Naudotojo sąsaja:<br>
+## Sistemos architektūra:<br>
+![](/photos/diagram.png)
+
+## Naudotojo sąsaja:<br>
 
 Pagrindinis puslapis:<br>
-![](/wireframes/main_page.png)
+![](/photos/main_page.png)
 
 Prisijungimo puslapis:<br>
-![](/wireframes/login.png)
+![](/photos/login.png)
 
 Registracijos puslapis:<br>
-![](/wireframes/register.png)
+![](/photos/register.png)
 
 Filmų sąrašo puslapis:<br>
-![](/wireframes/movies_page.png)
+![](/photos/movies_page.png)
 
 Filmų modalo pavyzdys:<br>
-![](/wireframes/movies_modal_example.png)
+![](/photos/movies_modal_example.png)
 
 Rezervacijų sąrašo puslapis:<br>
-![](/wireframes/reservations_page.png)
+![](/photos/reservations_page.png)
 
 Salių sąrašo puslapis:<br>
-![](/wireframes/halls_page.png)
+![](/photos/halls_page.png)
 
 Salių modalo pavyzdys:<br>
-![](/wireframes/halls_modal_example.png)
+![](/photos/halls_modal_example.png)
 
 Padalinių sąrašo puslapis:<br>
-![](/wireframes/divisions_page.png)
+![](/photos/divisions_page.png)
 
 Padalinių modalo pavyzdys:<br>
-![](/wireframes/divisions_modal_example.png)
+![](/photos/divisions_modal_example.png)
+
+## API specifikacija:<br>
+
+## Autorizacija<br>
+
+### Register<br>
+Tipas: POST<br>
+Parametrai: name*, email*, password*, password_confirmation*<br>
+Atsakymai: sėkmė 200, klaida 422<br>
+
+### Login<br>
+Tipas: POST<br>
+Parametrai: email*, password*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Logout<br>
+Tipas: POST<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 401<br>
+
+## Padaliniai<br>
+
+### List<br>
+Tipas: GET<br>
+Parametrai: -<br>
+Atsakymai: sėkmė 200<br>
+
+### Create<br>
+Tipas: POST<br>
+Parametrai: address*, halls_count*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Read<br>
+Tipas: GET<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Update<br>
+Tipas: PUT<br>
+Parametrai: address*, halls_count*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Delete<br>
+Tipas: DELETE<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+## Salės<br>
+
+### List<br>
+Tipas: GET<br>
+Parametrai: -<br>
+Atsakymai: sėkmė 200<br>
+
+### Create<br>
+Tipas: POST<br>
+Parametrai: division_id*, name*, seats_count*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Read<br>
+Tipas: GET<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Update<br>
+Tipas: PUT<br>
+Parametrai: division_id*, name*, seats_count*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Delete<br>
+Tipas: DELETE<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+## Filmai<br>
+
+### List<br>
+Tipas: GET<br>
+Parametrai: -<br>
+Atsakymai: sėkmė 200<br>
+
+### Create<br>
+Tipas: POST<br>
+Parametrai: name*, genre*, length*, image_url*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Read<br>
+Tipas: GET<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Update<br>
+Tipas: PUT<br>
+Parametrai: name*, genre*, length*, image_url*<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+### Delete<br>
+Tipas: DELETE<br>
+Parametrai: -<br>
+Atsakymai (kodas): sėkmė 200, klaida 422<br>
+
+## Išvados:<br>
+Pavyko realizuoti išorinėje pusėje visas serverio užklausas.<br> 
+Sistema buvo ištestuota, suprogramuoti 42 testai aprėpiantys visas serverio užklausas.<br>
+Taip pat kuriant projektą, buvo naudojama statinė kodo analizė PHPStan, dėl ko buvo stengiamasi išlaikyti švarų, kuo lengviau suprantantį kodą.<br>
 
 Darbą atliko:<br>
 Lukas Velička IFF-9/3
